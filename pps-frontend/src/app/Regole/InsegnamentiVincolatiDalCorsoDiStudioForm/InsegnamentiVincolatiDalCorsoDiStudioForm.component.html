@@ -1,0 +1,62 @@
+<!--Inserisco un secondo stepper per richiedere le informazioni preliminari per gli insegnamenti vincolati-->
+<mat-stepper #stepperInsegnamentiVincolatiDalCorso [linear]="true">
+  <!--primo step insegnamenti vincolati dal corso di studio-->
+  <mat-step [stepControl]="insegnamentiVincolatiDalCorsoPreliminareForm">
+    <ng-template matStepLabel>Informazioni Preliminari</ng-template>
+    <!--Tabella di preview-->
+    <table mat-table #tabellaInsegnamentiVincolatiDalCorsoPreliminare [dataSource]="vincolatiDalCorsoDiStudioTabella"
+      style="margin-bottom: 5%; width: 100%;" *ngIf="vincolatiDalCorsoDiStudioTabella.length >0">
+      <ng-container matColumnDef="Corso Di Studio Vincolante">
+        <th mat-header-cell *matHeaderCellDef> Corso Di Studio Vincolante </th>
+        <td mat-cell *matCellDef="let element"> {{element.corsoDiStudioVincolante}} </td>
+      </ng-container>
+      <ng-container matColumnDef="CFU Da Scegliere">
+        <th mat-header-cell *matHeaderCellDef> CFU Da Scegliere </th>
+        <td mat-cell *matCellDef="let element"> {{element.numeroCfuDaScegliere}} </td>
+      </ng-container>
+      <tr mat-header-row *matHeaderRowDef="displayedInsegnamentiVincolatiDalCorsoColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedInsegnamentiVincolatiDalCorsoColumns;"></tr>
+    </table>
+    <button mat-button (click)="removeVincolatoDalCorso()" *ngIf="vincolatiDalCorsoDiStudioTabella.length>0">Rimuovi
+      Insegnamenti Vincolati</button>
+    <!--form informazioni preliminari insegnamentiVincolatiDalCorso-->
+    <form [formGroup]="insegnamentiVincolatiDalCorsoPreliminareForm" class="formVerticaleFullWidth">
+      <mat-form-field appearance="outline" style="width: 100%;">
+        <mat-label>Corso Di Studio Vincolante</mat-label>
+        <mat-select formControlName=corsiDiStudioCtrl required>
+          <mat-option *ngFor="let corso of corsiDiStudio" [value]="corso">
+            {{corso.denominazione}} - {{corso.codice}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>CFU Da Scegliere</mat-label>
+        <input matInput placeholder="CFU" type="number" formControlName="cfuDaScegliereCtrl" required>
+      </mat-form-field>
+      <div>
+        <button mat-flat-button color="primary" matStepperNext>Aggiungi Insegnamenti</button>
+      </div>
+    </form>
+  </mat-step>
+
+  <!--step due insegnamentiVincolati dal corso di studio-->
+  <mat-step>
+    <ng-template matStepLabel>Insegnamenti</ng-template>
+    <app-InsegnamentiForm (newInsegnamento)="addInsegnamentoVincolato($event)"
+      (removeInsegnamento)="removeInsegnamentoVincolato()"
+      [eventsAggiornaTabella]="aggiornaTabella.asObservable()"
+      [codiceCorsoDiStudio]="codiceCorsoDiStudio"></app-InsegnamentiForm>
+    <div>
+      <button mat-flat-button color="primary" style="margin-left: 2%;" matStepperPrevious>Indietro</button>
+      <button mat-flat-button color="primary" style="margin-left: 2%;" matStepperNext>Aggiungi Slot Vincolata</button>
+    </div>
+  </mat-step>
+
+  <!--step tre vincolati dal corso di studio inserisco la slot vincolata-->
+  <mat-step>
+    <ng-template matStepLabel>Fine</ng-template>
+    <ng-template matStepLabel>Fine</ng-template>
+    <button mat-flat-button color="primary" style="margin-left: 2%;" matStepperPrevious>Indietro</button>
+    <button mat-flat-button color="primary" style="margin-left: 2%;" (click)="addVincolatoDalCorso()">Inserisci Insegnamenti Vincolati</button>
+  </mat-step>
+</mat-stepper>

@@ -1,0 +1,83 @@
+<div class="centra background">
+  <mat-tab-group color="accent" backgroundColor="primary" style="height: 100%; margin-top: 2%;">
+    <mat-tab label="Login"  *ngIf="!emailVerified" >
+      <mat-card class="card">
+        <p style="text-align: center;">
+          <img src="https://www.unisannio.it/themes/custom/unisannio/images/Logo_header.png.pagespeed.ce.L9uvAVRynq.png"  width="40%" >
+        </p>
+        <mat-card-header color="primary">
+          <mat-card-title>Login</mat-card-title>
+        </mat-card-header>
+        <mat-card-content class="cardContent">
+          <mat-error *ngIf="invalidLogin">{{error}}</mat-error>
+          <mat-form-field appearance="outline">
+            <mat-label>Email</mat-label>
+            <input matInput placeholder="Email" type="email" [(ngModel)]="email">
+          </mat-form-field>
+        </mat-card-content>
+        <button mat-raised-button color="primary" (click)="loginRequest()">Login</button>
+        <mat-progress-bar mode="indeterminate" style="padding-top: 20px;" *ngIf="!emailVerified && loginSent &&!invalidLogin"></mat-progress-bar>
+      </mat-card>
+      
+    </mat-tab>
+    <mat-tab label="Register" *ngIf="!emailVerified" style="height: max-content;">
+      <mat-card class="card">
+        <p style="text-align: center;">
+          <img src="https://www.unisannio.it/themes/custom/unisannio/images/Logo_header.png.pagespeed.ce.L9uvAVRynq.png"  width="40%" >
+        </p>
+        <mat-card-header color="primary">
+          <mat-card-title>Register</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <mat-error *ngIf="invalidRegistration">{{error}}</mat-error>
+          <mat-form-field appearance="outline">
+            <mat-label>Email</mat-label>
+            <input matInput placeholder="Email" type="email" [(ngModel)]="student.email">
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>Nome</mat-label>
+            <input matInput placeholder="nome" type="text" [(ngModel)]="student.nome">
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>Cognome</mat-label>
+            <input matInput placeholder="cognome" type="text" [(ngModel)]="student.cognome">
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>Matricola</mat-label>
+            <input matInput placeholder="matricola" type="text" [(ngModel)]="student.matricola">
+          </mat-form-field>
+        </mat-card-content>
+        <button mat-raised-button color="primary" (click)="registrationRequest()">Register</button>
+        <mat-progress-bar mode="indeterminate" style="padding-top: 20px;" *ngIf="!emailVerified && registrationSent && !invalidRegistration"></mat-progress-bar>
+      </mat-card>
+    </mat-tab>
+    <mat-tab label="OTP" *ngIf="emailVerified">
+        <mat-card class="card">
+          <p style="text-align: center;">
+            <img src="https://www.unisannio.it/themes/custom/unisannio/images/Logo_header.png.pagespeed.ce.L9uvAVRynq.png"  width="40%" >
+          </p>
+          <mat-card-header color="primary">
+            <mat-card-title>OTP</mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+            <mat-error *ngIf="invalidLogin">{{error}}</mat-error>
+            <mat-form-field appearance="outline">
+              <mat-label>OTP</mat-label>
+              <input matInput placeholder="OTP" type="text" [(ngModel)]="otp">
+            </mat-form-field>
+        </mat-card-content>
+          <button mat-raised-button color="primary" (click)="sendOTP()">Verify</button>
+        </mat-card>
+    </mat-tab>
+  </mat-tab-group>
+</div>  
+
+
+
+
+
+
+
+
+  
+  

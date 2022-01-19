@@ -1,0 +1,79 @@
+<div class="centra">
+<mat-card class="card">
+  <mat-card-header style="justify-content: center;">
+    <mat-card-title >Aggiungi Ordinamento</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <form  #contactForm="ngForm" >
+      <mat-form-field appearance="outline" style="width: 100%;">
+        <mat-label >Corso Di Studio</mat-label>
+        <mat-select>
+          <mat-option *ngFor="let corso of corsiDiStudio" [value]="corso.codice" (click)="setCodice(corso.codice)">
+            {{corso.denominazione}} - {{corso.codice}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field> 
+    <table class="centraTable" *ngIf="ordinamento.codiceCorso.length!=0">
+        <tr >
+          <td colspan="2">
+            <mat-form-field appearance="outline" style="width: 100%;">
+              <mat-label>Anno Di Redazione</mat-label>
+              <input matInput placeholder="Anno Di Redazione" name="annoDiRedazione"  [(ngModel)]="ordinamento.annoDiRedazione"  >
+            </mat-form-field>
+          </td>
+        </tr>
+        <tr >
+          <td colspan="2">
+
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <mat-form-field appearance="outline">
+              <mat-label>CFU Minimi Obbligatori</mat-label>
+              <input matInput placeholder="CFU Minimi Obbligatori"  name="CFUMinimiObbligatori" [(ngModel)]="ordinamento.cfuMinimiObbligatori">
+            </mat-form-field>
+          </td>
+          <td>
+            <mat-form-field appearance="outline">
+              <mat-label>CFU Massimi Obbligatori</mat-label>
+              <input matInput placeholder="CFU Massimi Obbligatori"  name="CFUMassimiObbligatori"   [(ngModel)]="ordinamento.cfuMassimiObbligatori">
+            </mat-form-field>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <mat-form-field appearance="outline">
+              <mat-label>CFU Minimi Orientamento</mat-label>
+              <input matInput placeholder="CFU Minimi Orientamento" name="CFUMinimiOrientamento"  [(ngModel)]="ordinamento.cfuMinimiOrientamento">
+            </mat-form-field>
+          </td>
+          <td>
+            <mat-form-field appearance="outline">
+              <mat-label>CFU Massimi Orientamento</mat-label>
+              <input matInput placeholder="CFU Massimi Orientamento" name="CFUMassimiOrientamento"  [(ngModel)]="ordinamento.cfuMassimiOrientamento">
+            </mat-form-field>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <mat-form-field appearance="outline">
+              <mat-label>CFU Minimi A Scelta</mat-label>
+              <input matInput placeholder="CFU Minimi A Scelta"  name="CFUMinimiAScelta"  [(ngModel)]="ordinamento.cfuMinimiAScelta">
+            </mat-form-field>
+          </td>
+          <td>
+            <mat-form-field appearance="outline">
+              <mat-label>CFU Massimi A Scelta</mat-label>
+              <input matInput placeholder="CFU Massimi A Scelta"  name="CFUMassimiAScelta"  [(ngModel)]="ordinamento.cfuMassimiAScelta">
+            </mat-form-field>
+          </td>
+        </tr>
+    </table>
+    <button mat-raised-button color="primary" (click)="addOrdinamento()" >Aggiungi</button>
+    </form>
+  </mat-card-content>
+</mat-card>
+</div>
+
+

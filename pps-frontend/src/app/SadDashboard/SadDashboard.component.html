@@ -1,0 +1,43 @@
+<mat-toolbar color="primary">
+  <mat-toolbar-row style="text-align: right;">
+    <button mat-flat-button color="primary" (click)="drawer.toggle()">
+      <mat-icon>menu</mat-icon> Menu
+    </button>
+    <span class="spacer"></span>
+    <span class="spacer"></span>
+    <span class="spacer"></span>
+    <span class="spacer"></span>
+    <span class="spacer"></span>
+    <span class="spacer"></span>
+    <span class="spacer"></span>
+    <button mat-flat-button color="primary" class="spacer" (click)="updateDataBase()"> <mat-icon>refresh</mat-icon> Aggiorna DataBase</button>
+  </mat-toolbar-row>
+</mat-toolbar>
+
+<mat-drawer-container class="example-container" autosize>
+  <mat-drawer #drawer class="example-sidenav" mode="side">
+    <mat-card style="background-color: #EEEEEE;">
+      <mat-card-header>
+        <div mat-card-avatar class="example-header-image"></div>
+        <mat-card-title style="font-size: 15px;">{{sad.nome}} {{sad.cognome}}</mat-card-title>
+        <mat-card-subtitle style="font-size: 15px;">{{sad.ruolo}}</mat-card-subtitle>
+      </mat-card-header>
+    </mat-card>
+    <br>
+    <br>
+    <p ><b>General</b></p>
+    <nav>
+      <button mat-flat-button  class="sidenavbutton" [routerLink]="['/sadDashboard/regole']"  routerLinkActive="active"><mat-icon>add_circle</mat-icon> Aggiungi Manifesto</button>
+      <button mat-flat-button  class="sidenavbutton" [routerLink]="['/sadDashboard/ordinamenti']" routerLinkActive="active"><mat-icon>add_circle</mat-icon> Aggiungi Ordinamento</button>
+      <button mat-flat-button  class="sidenavbutton" [routerLink]="['/sadDashboard/manifesti']" routerLinkActive="active">	<mat-icon>book</mat-icon> Visualizza Manifesti</button>
+      <button mat-flat-button  class="sidenavbutton" style="margin-top: 120%;" (click)="logout()"> <mat-icon>exit_to_app</mat-icon> Logout</button>
+    </nav>
+  </mat-drawer>
+
+  <mat-drawer-content class="background">
+    
+    <router-outlet></router-outlet>
+  </mat-drawer-content>
+</mat-drawer-container>
+
+

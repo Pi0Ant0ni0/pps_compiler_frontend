@@ -1,0 +1,177 @@
+<mat-stepper #stepperRegola [linear]=true>
+  <!--Primo step in cui chiedo le informazioni base-->
+  <mat-step [stepControl]="preliminariForm" errorMessage="Le informazioni preliminari sono necessarie!">
+    <ng-template matStepLabel>Informazioni Preliminari</ng-template>
+    <form class="formVerticaleFullWidth" [formGroup]="preliminariForm" #preliminare="ngForm">
+      <mat-form-field appearance="outline">
+        <mat-label>Corso Di Studio</mat-label>
+        <mat-select formControlName=corsiDiStudioCtrl required>
+          <mat-option *ngFor="let corso of corsiDiStudio" [value]="corso">
+            {{corso.denominazione}} - {{corso.codice}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Anno Ordinamento</mat-label>
+        <input matInput name="annoOrdinamento" type="number" formControlName=annoOrdinamentoCtrl [value]=annoOrdinamento
+          required>
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Anno coorte</mat-label>
+        <input matInput placeholder="anno coorte" type="number" formControlName=annoCorteCtrl required>
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Curricula</mat-label>
+        <input matInput placeholder="curricula" type="text" formControlName=curriculaCtrl>
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>CFU A Scelta Libera</mat-label>
+        <input matInput placeholder="cfu" type="number" formControlName=cfuASceltaCtrl required>
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>CFU Orientamento</mat-label>
+        <input matInput placeholder="cfu" type="number" formControlName=cfuOrientamentoCtrl required>
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>CFU Totali</mat-label>
+        <input matInput placeholder="cfu" type="number" formControlName=cfuTotaliCtrl required>
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>CFU Extra</mat-label>
+        <input matInput placeholder="cfu" type="number" formControlName=cfuExtraCtrl required>
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Data Di Inizio Compilazione Del Piano Di Studio</mat-label>
+        <input matInput placeholder="cfu" type="date" formControlName=dataInizioCompilazioneCtrl required>
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Data Di Fine Compilazione Del Piano Di Studio</mat-label>
+        <input matInput placeholder="cfu" type="date" formControlName=dataFineCompilazioneCtrl required>
+      </mat-form-field>
+      <div>
+        <button mat-flat-button color="primary" [disabled]="!preliminariForm.valid" matStepperNext>Avanti</button>
+      </div>
+    </form>
+  </mat-step>
+
+
+  <!--Secondo step in cui creo lo schema dei piani-->
+  <mat-step>
+    <ng-template matStepLabel>Manifesto Degli Studi</ng-template>
+    <button mat-flat-button color="primary" style="margin-bottom: 2%;" (click)="addAnno();">
+      <mat-icon>add_circle</mat-icon> Aggiungi anno
+    </button>
+    <button mat-flat-button color="primary" style="margin-bottom: 2%; margin-left: 2%;" (click)="removeAnno();">
+      <mat-icon>remove_circle</mat-icon> Rimuovi anno
+    </button>
+    <!--ANNI-->
+    <mat-accordion>
+      <!--Gli anni sono aggiunti dinamicamente sotto forma di expansion panel-->
+      <mat-expansion-panel hideToggle *ngFor="let anno of anni;" [expanded]="anno == pannelloAnno">
+        <mat-expansion-panel-header (click)="setPannelloAnno(anno)">
+          <mat-panel-title>
+            {{anno}} ANNO
+          </mat-panel-title>
+          <mat-panel-description>
+            Inserisci gli insegnamenti del {{anno}} anno
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+        <!--Nel panel ho altri panel che mi permettono di aggiungere insegnamenti-->
+        <!--Questo è il panel obbligatori-->
+        <mat-accordion class="headers-align">
+          <mat-expansion-panel hideToggle [expanded]="1 == pannelloInsegnamenti">
+            <mat-expansion-panel-header style="background-color: #b17900;" (click)="setPannelloInsegnamenti(1)">
+              <mat-panel-title style="color: white;">
+                Insegnamenti Obbligatori
+              </mat-panel-title>
+              <mat-panel-description style="color: white;">
+                Inserisci gli insegnamenti Obbligatori
+              </mat-panel-description>
+            </mat-expansion-panel-header>
+            <app-InsegnamentiForm (newInsegnamento)="addInsegnamentoObbligatorio(anno,$event)"
+              (removeInsegnamento)="removeInsegnamentoObbligatorio(anno)"
+              [codiceCorsoDiStudio]="codiceCorsoDiStudioCorrente"></app-InsegnamentiForm>
+          </mat-expansion-panel>
+        </mat-accordion>
+        <!--fine panel obbligatori-->
+        <!--Questo è il panel orientamento-->
+        <mat-accordion class="headers-align">
+          <mat-expansion-panel hideToggle [expanded]="3 == pannelloInsegnamenti">
+            <mat-expansion-panel-header style="background-color: #e9b511;" (click)="setPannelloInsegnamenti(3)">
+              <mat-panel-title style="color: white;">
+                Insegnamenti di Orientamento
+              </mat-panel-title>
+              <mat-panel-description style="color: white; text-align: start;">
+                Inserisci gli insegnamenti di orientamento
+              </mat-panel-description>
+            </mat-expansion-panel-header>
+            <app-OrientamentoForm (newOrientamento)="addOrientamento(anno,$event)"
+              (removeOrientamento)="removeOrientamento(anno)" [dipartimento]="dipartimento">
+            </app-OrientamentoForm>
+          </mat-expansion-panel>
+        </mat-accordion>
+        <!--panel insegnamenti vincolati-->
+        <mat-accordion class="headers-align">
+          <mat-expansion-panel hideToggle [expanded]="4 == pannelloInsegnamenti">
+            <mat-expansion-panel-header style="background-color: #ffcb18;" (click)="setPannelloInsegnamenti(4)">
+              <mat-panel-title style="color: white;">
+                Insegnamenti Vincolati Dal Corso Di Studio
+              </mat-panel-title>
+              <mat-panel-description style="color: white; text-align: start;">
+                Inserisci gli insegnamenti vincolati dal corso di studio
+              </mat-panel-description>
+            </mat-expansion-panel-header>
+            <app-InsegnamentiVincolatiDalCorsoDiStudioForm (newVincolato)="addInsegnamentoVincolato(anno,$event)"
+              (removeVincolato)="removeInsegnamentoVincolato(anno)" [codiceCorsoDiStudio]="codiceCorsoDiStudioCorrente">
+            </app-InsegnamentiVincolatiDalCorsoDiStudioForm>
+          </mat-expansion-panel>
+        </mat-accordion>
+        <mat-form-field appearance="outline" style="margin-top: 5%;width: 100%;">
+          <mat-label>Quota Di CFU A Scelta Libera Per L'Anno {{anno}}</mat-label>
+          <input matInput placeholder="cfu" type="number" #cfu [value]=0 (change)="addCfuAScelta(anno, cfu.value)" >
+        </mat-form-field>
+      </mat-expansion-panel>
+    </mat-accordion>
+    
+    <div style="margin-top: 5%;">
+      <button mat-flat-button color="primary" matStepperPrevious style="margin-right: 2%;">Indietro</button>
+      <button mat-flat-button color="primary" matStepperNext>Finito </button>
+    </div>
+  </mat-step>
+
+
+  <!--Step in cui inserisco gli insegnamenti a scelta-->
+  <mat-step [optional]=true>
+    <ng-template matStepLabel>Insegnamenti Di Automatica Approvazione</ng-template>
+    <!--Questo è il panel A Scelta-->
+    <mat-accordion class="headers-align">
+      <mat-expansion-panel hideToggle>
+        <mat-expansion-panel-header style="background-color: #d49f0c;">
+          <mat-panel-title style="color: white;">
+            Insegnamenti A Scelta
+          </mat-panel-title>
+          <mat-panel-description style="color: white; text-align: start;">
+            Inserisci gli insegnamenti a scelta
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+        <app-InsegnamentiLiberiForm (newInsegnamento)="addInsegnamentoAScelta($event)"
+          (removeInsegnamento)="deleteInsegnamentoAScelta()" [dipartimento]="dipartimento">
+        </app-InsegnamentiLiberiForm>
+      </mat-expansion-panel>
+    </mat-accordion>
+    <!--fine panel a scelta-->
+    <div style="margin-top: 2%;">
+      <button mat-flat-button color="primary" matStepperPrevious style="margin-left: 2%;">Indietro</button>
+      <button mat-flat-button color="primary" matStepperNext style="margin-left: 2%;">Avanti</button>
+    </div>
+  </mat-step>
+
+  <!--Step in cui inserisco gli insegnamenti a scelta-->
+  <mat-step>
+    <ng-template matStepLabel>Fine</ng-template>
+    <div>
+      <button mat-flat-button color="primary" matStepperPrevious style="margin-left: 2%;">Indietro</button>
+      <button mat-flat-button color="primary" style="margin-left: 2%;" (click)="addRegola()">Inserisci Regola</button>
+    </div>
+  </mat-step>
+</mat-stepper>

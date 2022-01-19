@@ -1,0 +1,44 @@
+.card{
+  text-align: center;
+  align-items: center;
+  height: 600px;
+  width: 400px;
+  box-shadow: 0 1px 5px hsla(0,0%,40%,.2),0 2px 2px hsla(0,0%,40%,.14),0 3px 1px -2px hsla(0,0%,40%,.12);
+  margin: auto;
+}
+
+mat-form-field {
+  width: 100%;
+}
+
+.centra{
+  display: grid;
+  height: 100vh;
+  justify-content: center;
+}
+.loading{
+  align-self: flex-end;
+}
+
+
+
+.cardContent {
+  align-content: center;
+  text-align: center;
+  justify-content: center;
+}
+
+
+
+
+
+
+
+  
+
+
+    
+
+
+    
+    

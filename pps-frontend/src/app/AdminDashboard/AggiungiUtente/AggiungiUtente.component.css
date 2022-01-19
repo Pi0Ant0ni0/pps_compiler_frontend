@@ -1,0 +1,22 @@
+.centra {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    height: 90%;
+}
+.card{
+    width: 50%;
+    height: max-content;
+    justify-content: center;
+    text-align: center;
+}
+
+.form{
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    justify-content: center;
+    justify-items: center;
+
+}

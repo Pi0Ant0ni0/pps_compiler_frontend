@@ -1,0 +1,64 @@
+<!--Tabella di preview-->
+<table mat-table #tabella [dataSource]="insegnamentiTabella" style="margin-bottom: 5%; width: 100%;"
+  *ngIf="insegnamentiTabella.length >0">
+  <ng-container matColumnDef="Denominazione Insegnamento">
+    <th mat-header-cell *matHeaderCellDef> Denominazione Insegnamento </th>
+    <td mat-cell *matCellDef="let element"> {{element.denominazioneAttivitaDidattica}} </td>
+  </ng-container>
+  <ng-container matColumnDef="Codice Insegnamento">
+    <th mat-header-cell *matHeaderCellDef> Codice Insegnamento </th>
+    <td mat-cell *matCellDef="let element"> {{element.codiceAttivitaDidattica}} </td>
+  </ng-container>
+  <ng-container matColumnDef="Settore">
+    <th mat-header-cell *matHeaderCellDef> Settore </th>
+    <td mat-cell *matCellDef="let element"> {{element.settoreScientificoDisciplinare}} </td>
+  </ng-container>
+  <ng-container matColumnDef="CFU">
+    <th mat-header-cell *matHeaderCellDef> CFU </th>
+    <td mat-cell *matCellDef="let element"> {{element.cfu}} </td>
+  </ng-container>
+  <ng-container matColumnDef="Codice Corso Di Studio">
+    <th mat-header-cell *matHeaderCellDef> Codice Corso Di Studio </th>
+    <td mat-cell *matCellDef="let element"> {{element.codiceCorsoDiStudio}} </td>
+  </ng-container>
+  <ng-container matColumnDef="Corso Di Studio">
+    <th mat-header-cell *matHeaderCellDef> Corso Di Studio </th>
+    <td mat-cell *matCellDef="let element"> {{element.denominazioneCorsoDiStudio}} </td>
+  </ng-container>
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>
+
+<!--Form per inserire gli insegnamenti Obbligatori-->
+<form  [formGroup]="insegnamentiForm" #insegnamenti="ngForm">
+  <mat-form-field appearance="outline" style="width: 100%; margin-top: 2%;">
+    <mat-label>Denominazione Insegnamento</mat-label>
+    <input matInput [matAutocomplete]="auto" formControlName=DenominazioneInsegnamentoCtrl required>
+    <mat-autocomplete #auto="matAutocomplete" [displayWith]="getDenominazioneInsegnamento.bind(this)"
+      (optionSelected)="selectedInsegnamento($event)">
+      <mat-option *ngFor="let insegnamento of filteredInsegnamenti | async" [value]="insegnamento">
+        <span>{{insegnamento.denominazioneAttivitaDidattica}} - {{insegnamento.codiceCorsoDiStudio}}</span>
+      </mat-option>
+    </mat-autocomplete>
+  </mat-form-field>
+  <mat-form-field appearance="outline">
+    <mat-label>Codice Insegnamento</mat-label>
+    <input matInput formControlName=CodiceInsegnamentoCtrl [readonly]="true" required>
+  </mat-form-field>
+  <mat-form-field appearance="outline">
+    <mat-label>Settore Scientifico Disciplinare</mat-label>
+    <input matInput formControlName=SettoreScientificoDisciplinareCtrl [readonly]="true" required>
+  </mat-form-field>
+  <mat-form-field appearance="outline">
+    <mat-label>CFU</mat-label>
+    <input matInput formControlName=CFUCtrl [readonly]="true" required>
+  </mat-form-field>
+</form>
+<button mat-flat-button color="primary" [disabled]="!insegnamenti.form.valid" style="margin-bottom: 2%;"
+  (click)="addInsegnamento();">
+  <mat-icon>add_circle</mat-icon> Aggiungi Insegnamento
+</button>
+<button mat-flat-button color="primary" style="margin-bottom: 2%; margin-left: 2%;"
+  (click)="deleteInsegnamento();">
+  <mat-icon>remove_circle</mat-icon> Rimuovi Insegnamento
+</button>

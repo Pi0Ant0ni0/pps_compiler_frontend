@@ -1,0 +1,42 @@
+table {
+  width: 80%;
+  margin-bottom: 2%;
+}
+
+.centra{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+tr.detail-row {
+  height: 0;
+}
+
+tr.element-row:not(.expanded-row):hover {
+  background: whitesmoke;
+}
+
+tr.element-row:not(.expanded-row):active {
+  background: #efefef;
+}
+
+
+.element-detail {
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.centraOrizzontale{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+.pulsanti{
+  margin-left: 3%;
+}
+
+  

@@ -1,0 +1,15 @@
+<h1 style="text-align: center;"> Manifesti Degli Studi</h1>
+<h2 style="text-align: center;">Corso Di Studio</h2>
+<form class="centra" [formGroup]="manifestiFormGroup">
+  <mat-form-field appearance="outline" style="width: 50%;">
+    <mat-label >Corso Di Studio</mat-label>
+    <mat-select formControlName=corsiDiStudioCtrl>
+      <mat-option *ngFor="let corso of corsiDiStudio" [value]="corso">
+        {{corso.denominazione}} - {{corso.codice}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+</form>
+<div style="text-align: center;">
+  <a  mat-flat-button  color="primary" *ngFor="let manifesto of manifesti " style="margin-right: 2%;" href="{{urlAnno}}/{{manifesto.anno}}/?curricula={{manifesto.curricula}}" target="_blank" >{{manifesto.anno}} {{manifesto.curricula}}</a>
+</div>

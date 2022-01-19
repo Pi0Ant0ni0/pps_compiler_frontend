@@ -1,0 +1,129 @@
+<div class="centra">
+  <h2 *ngIf="pps.liberi.length >0" style="margin-top: 1%;">Insegnamenti A Scelta </h2>
+  <!--Tabella di preview-->
+  <table mat-table multiTemplateDataRows #tabellaAScelta [dataSource]="pps.liberi"
+  *ngIf="pps.liberi.length >0">
+
+    <ng-container matColumnDef="Denominazione Insegnamento">
+      <th mat-header-cell *matHeaderCellDef> Denominazione Insegnamento </th>
+      <td mat-cell *matCellDef="let element"> {{element.denominazioneAttivitaDidattica}} </td>
+    </ng-container>
+    <ng-container matColumnDef="Codice Insegnamento">
+      <th mat-header-cell *matHeaderCellDef> Codice Insegnamento </th>
+      <td mat-cell *matCellDef="let element"> {{element.codiceAttivitaDidattica}} </td>
+    </ng-container>
+    <ng-container matColumnDef="Settore">
+      <th mat-header-cell *matHeaderCellDef> Settore </th>
+      <td mat-cell *matCellDef="let element"> {{element.settoreScientificoDisciplinare}} </td>
+    </ng-container>
+    <ng-container matColumnDef="CFU">
+      <th mat-header-cell *matHeaderCellDef> CFU </th>
+      <td mat-cell *matCellDef="let element"> {{element.cfu}} </td>
+    </ng-container>
+
+    <!-- Expanded Content Column - The detail row is made up of this one column that spans across all columns -->
+    <ng-container matColumnDef="expandedDetail">
+      <td mat-cell *matCellDef="let element" [attr.colspan]="displayedColumns.length">
+        <div class="element-detail" [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
+          <div *ngIf="element.obiettivi.length>0">
+            <br><p><b>Obiettivi:</b></p>
+            <div  [innerHtml]="element.obiettivi"></div>
+          </div>
+          <div *ngIf="element.contenuti.length>0">
+            <br><p><b>Contenuti:</b></p>
+            <div  [innerHtml]="element.contenuti"></div>
+          </div>
+          <div *ngIf="element.metodiDidattici.length>0">
+            <br><p><b>Metodi Didattici:</b></p>
+            <div  [innerHtml]="element.metodiDidattici"></div>
+          </div>
+          <div *ngIf="element.modalitaVerificaApprendimento.length>0">
+            <br><p><b>Modalità Verifica Apprendimento :</b></p>
+            <div  [innerHtml]="element.modalitaVerificaApprendimento"></div>
+          </div>
+          <div *ngIf="element.prerequisiti.length>0">
+            <br><p><b>Prerequisiti:</b></p>
+            <div  [innerHtml]="element.prerequisiti"></div>
+          </div>
+        </div>
+      </td>
+    </ng-container>
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let element; columns: displayedColumns;" class="element-row"
+      [class.expanded-row]="expandedElement === element"
+      (click)="expandedElement = expandedElement === element ? null : element">
+    </tr>
+    <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="detail-row"></tr>
+  </table>
+
+  <!--Tabella di preview-->
+  <h2 *ngIf="pps.orientamento.length >0" style="margin-top: 1%;">Insegnamenti Obbligatori </h2>
+  <table mat-table #tabellaOrientamento multiTemplateDataRows [dataSource]="pps.orientamento"
+    *ngIf="pps.orientamento.length >0">
+    <ng-container matColumnDef="Denominazione Insegnamento">
+      <th mat-header-cell *matHeaderCellDef> Denominazione Insegnamento </th>
+      <td mat-cell *matCellDef="let element"> {{element.denominazioneAttivitaDidattica}} </td>
+    </ng-container>
+    <ng-container matColumnDef="Codice Insegnamento">
+      <th mat-header-cell *matHeaderCellDef> Codice Insegnamento </th>
+      <td mat-cell *matCellDef="let element"> {{element.codiceAttivitaDidattica}} </td>
+    </ng-container>
+    <ng-container matColumnDef="Settore">
+      <th mat-header-cell *matHeaderCellDef> Settore </th>
+      <td mat-cell *matCellDef="let element"> {{element.settoreScientificoDisciplinare}} </td>
+    </ng-container>
+    <ng-container matColumnDef="CFU">
+      <th mat-header-cell *matHeaderCellDef> CFU </th>
+      <td mat-cell *matCellDef="let element"> {{element.cfu}} </td>
+    </ng-container>
+
+
+   <!-- Expanded Content Column - The detail row is made up of this one column that spans across all columns -->
+    <ng-container matColumnDef="expandedDetail">
+      <td mat-cell *matCellDef="let element" [attr.colspan]="displayedColumns.length">
+        <div class="element-detail" [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
+          <div *ngIf="element.obiettivi.length>0">
+            <br><p><b>Obiettivi:</b></p>
+            <div  [innerHtml]="element.obiettivi"></div>
+          </div>
+          <div *ngIf="element.contenuti.length>0">
+            <br><p><b>Contenuti:</b></p>
+            <div  [innerHtml]="element.contenuti"></div>
+          </div>
+          <div *ngIf="element.metodiDidattici.length>0">
+            <br><p><b>Metodi Didattici:</b></p>
+            <div  [innerHtml]="element.metodiDidattici"></div>
+          </div>
+          <div *ngIf="element.modalitaVerificaApprendimento.length>0">
+            <br><p><b>Modalità Verifica Apprendimento :</b></p>
+            <div  [innerHtml]="element.modalitaVerificaApprendimento"></div>
+          </div>
+          <div *ngIf="element.prerequisiti.length>0">
+            <br><p><b>Prerequisiti:</b></p>
+            <div  [innerHtml]="element.prerequisiti"></div>
+          </div>
+        </div>
+      </td>
+    </ng-container>
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let element; columns: displayedColumns;" class="element-row"
+      [class.expanded-row]="expandedElement === element"
+      (click)="expandedElement = expandedElement === element ? null : element">
+    </tr>
+    <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="detail-row"></tr>
+  </table>
+</div>
+<div class="centraOrizzontale">
+  <button mat-fab color="primary" class="pulsanti" (click)="goBack()">
+    <mat-icon>arrow_back</mat-icon>
+  </button>
+  <button mat-fab style="color: white; background-color: green;" class="pulsanti" (click)="openDialogAccetta()">
+    Approva
+  </button>
+  <button mat-fab style="color: white; background-color: #690120;" class="pulsanti" (click)="openDialogRifiuta()">
+    Rifiuta
+  </button>
+  <a mat-fab style="color: white; background-color: #cbae34;" class="pulsanti" (click)="openPPSPDF(pps.email)" target="_blank">
+    PDF
+  </a>
+</div>

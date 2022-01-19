@@ -1,0 +1,19 @@
+.card{
+    text-align: center;
+    align-items: center;
+    height: fit-content;
+    width: fit-content;
+}
+
+.centra{
+    display: grid;
+    height: 100vh;
+    align-items: center;
+    justify-content: center;
+}
+.icona{
+    vertical-align: middle;
+    position: relative;
+    top: -1px;
+}
+

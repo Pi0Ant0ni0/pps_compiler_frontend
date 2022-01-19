@@ -1,0 +1,24 @@
+<div class="centra" *ngIf="pps">
+  <mat-card class="card">
+    <mat-card-header [style.background-color]="color">
+      <mat-card-title style="color: white; margin-top: 2%;"><mat-icon  class="icona">subject</mat-icon> Modulo di Presentazione Del Piano Di Studio</mat-card-title>
+      <mat-card-subtitle style="color: white;"><mat-icon  class="icona">date_range</mat-icon> Data Di Compilazione: {{pps.dataCompilazione.toLocaleString()}}</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+      <br>
+      <p><mat-icon class="icona"> email</mat-icon><b> Email:</b> {{pps.email}}</p>
+        <div *ngIf="pps.approvato">
+          <button mat-raised-button style="background-color: green; color: white;"><mat-icon>check_circle</mat-icon> Approvato </button>
+        </div>
+
+        <div *ngIf="pps.rifiutato">
+          <button mat-raised-button style="color: white; width: 50%; background-color: #690120;"><mat-icon>report_problem</mat-icon> Rifiutato </button>
+        </div>
+
+        <div *ngIf="pps.approvato==false && pps.rifiutato==false" >
+          <button mat-raised-button style="background-color: #cbae34; color: white;"><mat-icon>schedule</mat-icon> In Sospeso </button>
+        </div>
+    </mat-card-content>
+  </mat-card>
+  <a mat-raised-button color="primary" style="margin-bottom: 50%;" (click)="openPPSPDf(pps.email)" target="_blank">Visualizza Modulo <mat-icon>open_in_new</mat-icon></a>
+</div>

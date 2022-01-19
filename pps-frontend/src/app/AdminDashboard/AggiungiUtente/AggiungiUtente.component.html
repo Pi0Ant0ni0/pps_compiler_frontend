@@ -1,0 +1,42 @@
+<div class="centra">
+  <mat-card class="card">
+    <mat-card-header style="justify-content: center;">
+      <mat-card-title>Aggiungi Utente</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <form #utenteForm="ngForm" [formGroup]="utenteFormGroup" class="form">
+        <mat-form-field appearance="outline" style="width: 100%;">
+          <mat-label>Email</mat-label>
+          <input matInput placeholder="Email" formControlName="emailCtrl" type="email">
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Nome</mat-label>
+          <input matInput placeholder="nome" formControlName="nomeCtrl">
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Cognome</mat-label>
+          <input matInput placeholder="cognome" formControlName="cognomeCtrl">
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Ruolo</mat-label>
+          <mat-select #ruolo formControlName=ruoloCtrl>
+            <mat-option *ngFor="let ruolo of ruoli" [value]="ruolo">
+              {{ruolo}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <div #docente *ngIf="isDocente">
+          <mat-form-field appearance="outline" style="width: 100%;">
+            <mat-label>Corso Di Studio</mat-label>
+            <mat-select formControlName=corsoDiStudioCtrl >
+              <mat-option *ngFor="let corso of corsiDiStudio" [value]="corso">
+                {{corso.denominazione}} - {{corso.codice}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <button mat-raised-button color="primary" (click)="addUtente()" [disabled]="!utenteForm.valid">Aggiungi</button>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>
