@@ -10,8 +10,8 @@ import { Observable, throwError } from 'rxjs';
   providedIn: 'root'
 })
 export class StudentService {
-  private _insegnamentiUrl = "/rest/insegnamenti/";
-  private _orientamentiUrl = "/rest/regole/";
+  private _insegnamentiUrl = "/rest/attivitadidattiche/";
+  private _orientamentiUrl = "/rest/manifestideglistudi/";
   private _ppsUrl="/rest/pps";
 
   getInsegnamentiAScelta(coorte :number, corsoDiStudio:string) : Observable<any>{
@@ -20,7 +20,7 @@ export class StudentService {
   }
 
   getOrientamenti(coorte :number, corsoDiStudio:string): Observable<any>{
-    return this._http.get<Orientamento[]>(this._orientamentiUrl+"/"+coorte+"/"+corsoDiStudio+"/orientamenti")
+    return this._http.get<Orientamento[]>(this._orientamentiUrl+"/"+corsoDiStudio+"/"+coorte+"/orientamenti")
     .pipe(catchError(this._handleError));
   }
 

@@ -12,23 +12,23 @@ import { ManifestoDegliStudi } from '../API/ManifestoDegliStudi';
 export class SadService {
 
   private corsiDiStudioUrl = '/rest/corsiDiStudio';
-  private regoleUrl = '/rest/regole';
-  private insegnamentiUrl = '/rest/insegnamenti';
+  private regoleUrl = '/rest/manifestideglistudi';
+  private insegnamentiUrl = '/rest/attivitadidattiche';
   private ordinamentiUrl='rest/ordinamenti';
 
   updateDB() : Observable<any>{
     return this.http.post(this.insegnamentiUrl,'',{responseType: 'text'})
-    .pipe(catchError(this.handleError));;
+    .pipe(catchError(this.handleError));
   }
 
   getCorsiDiStudio() : Observable<any>{
     return this.http.get(this.corsiDiStudioUrl+"/ingegneria")
-    .pipe(catchError(this.handleError));;
+    .pipe(catchError(this.handleError));
   }
 
   getManifestiPreview(codice: string) : Observable<any>{
     return this.http.get<number[]>(this.regoleUrl+'/'+codice)
-    .pipe(catchError(this.handleError));;
+    .pipe(catchError(this.handleError));
   }
 
   addOrdinamenti(ordinamento: Ordinamento) : Observable<any>{
@@ -48,12 +48,12 @@ export class SadService {
   }
 
   getInsegnamentiErogatiCorsoDiStudio(codiceCorsoDiStudio : string) : Observable<AttivitaDidattica[]>{
-    return this.http.get<AttivitaDidattica[]>(this.insegnamentiUrl+"/"+codiceCorsoDiStudio)
+    return this.http.get<AttivitaDidattica[]>(this.insegnamentiUrl+"/"+codiceCorsoDiStudio+"/erogate")
     .pipe(catchError(this.handleError));
   }
 
   getInsegnamentiProgrammatiCorsoDiStudio(codiceCorsoDiStudio : string) : Observable<AttivitaDidattica[]>{
-    return this.http.get<AttivitaDidattica[]>(this.insegnamentiUrl+"/"+codiceCorsoDiStudio+"/programmati")
+    return this.http.get<AttivitaDidattica[]>(this.insegnamentiUrl+"/"+codiceCorsoDiStudio+"/programmate")
     .pipe(catchError(this.handleError));
   }
 

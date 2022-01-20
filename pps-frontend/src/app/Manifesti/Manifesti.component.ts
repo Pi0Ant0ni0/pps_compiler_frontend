@@ -15,7 +15,7 @@ export class ManifestiComponent implements OnInit {
 
   public corsiDiStudio : CorsoDiStudio[] = []
   public manifesti: ManifestoPreview[] = [];
-  public urlAnno = "/rest/regole";
+  public urlAnno = "/rest/manifestideglistudi";
   public manifestiFormGroup : FormGroup;
 
 
@@ -43,7 +43,7 @@ export class ManifestiComponent implements OnInit {
         this.sadService.getManifestiPreview(corsoDiStudio.codice).subscribe({
           next: (manifesti: ManifestoPreview[]) =>{this.manifesti = manifesti}
         });
-        this.urlAnno= "/rest/regole/"+corsoDiStudio.codice;
+        this.urlAnno= "/rest/manifestideglistudi/"+corsoDiStudio.codice;
       }
     });
 
