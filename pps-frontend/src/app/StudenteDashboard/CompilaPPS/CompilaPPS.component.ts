@@ -21,12 +21,14 @@ export class CompilaPPSComponent implements OnInit {
   orientamento: InsegnamentoRegola[]=[];
   insegnamentiAScelta: AttivitaDidattica[] = [];
   coorte:number |undefined;
-  codiceCorsoDiStudio:string |undefined;
+  codiceCorsoDiStudio:string|undefined;
   preliminariForm: FormGroup;
   @ViewChild('stepperPPS') stepper!: MatStepper;
   corsiDiStudio: CorsoDiStudio[] = [];
   valid:boolean=false;
   thereIsOrientamento :boolean=true;
+  curricula:string[] =[];
+  curriculum: string |undefined;
 
   addValid(valid: boolean){
     this.valid=valid;
@@ -53,7 +55,8 @@ export class CompilaPPSComponent implements OnInit {
       const pps = {
       attivitaDidatticheAScelta :this.insegnamentiAScelta,
       orientamento: this.orientamento,
-      coorte: this.coorte!
+      coorte: this.coorte!,
+      curriculum: this.curriculum!
       };
 
       this._studedentService.addPPS(pps).subscribe({
@@ -80,16 +83,43 @@ export class CompilaPPSComponent implements OnInit {
 
     this.preliminariForm = this._formBuilder.group({
       coorteCtrl:[Validators.required],
-      corsiDiStudioCtrl: [Validators.required]
+      corsiDiStudioCtrl: [Validators.required],
+      curriculumCtrl:[Validators.required]
     });
 
     this._sadService.getCorsiDiStudio().subscribe({
       next: (corsi: CorsoDiStudio[]) => this.corsiDiStudio = corsi,
     });
 
-    this.preliminariForm.get("coorteCtrl")?.valueChanges.subscribe({next: (coorte: number)=> this.coorte=coorte});
-    this.preliminariForm.get("corsiDiStudioCtrl")?.valueChanges.subscribe({next: (corsoDiStudio: CorsoDiStudio)=> this.codiceCorsoDiStudio=corsoDiStudio.codice});
-   }
+    this.preliminariForm.get("corsiDiStudioCtrl")?.valueChanges.subscribe({
+      next: (corsoDiStudio: CorsoDiStudio)=> {
+        this.thereIsOrientamento=true;
+        this.codiceCorsoDiStudio=corsoDiStudio.codice;
+        this.curricula=[];
+        this.curriculum=undefined;
+        if(this.coorte){
+          this._studedentService.getCurricula(this.codiceCorsoDiStudio!,this.coorte).subscribe({
+            next: (curricula:string[]) =>this.curricula=curricula,
+          });
+        }
+      }
+    });
+    this.preliminariForm.get("coorteCtrl")?.valueChanges.subscribe({
+      next: (coorte: number)=> {
+        this.thereIsOrientamento=true;
+        this.coorte=coorte
+        this.curriculum=undefined;
+        if(this.codiceCorsoDiStudio){
+          this._studedentService.getCurricula(this.codiceCorsoDiStudio,this.coorte).subscribe({
+            next: (curricula:string[]) =>this.curricula=curricula,
+          });
+        }
+      }
+    });
+    this.preliminariForm.get("curriculumCtrl")?.valueChanges.subscribe({
+      next: (curriculum: string)=> this.curriculum = curriculum,
+    });
+  }
 
   ngOnInit() {
   }

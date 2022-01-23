@@ -91,9 +91,9 @@ export class OrientamentoPPSComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
+    console.log(this.coorte);
+    console.log(this.codiceCorsoDiStudio);
     if(this.codiceCorsoDiStudio && this.coorte && this.coorte.toLocaleString().length>=4){
-      console.log(this.coorte);
-      console.log(this.codiceCorsoDiStudio);
       this._studentService.getOrientamenti(this.coorte,this.codiceCorsoDiStudio).subscribe({
         next: (orientamenti: Orientamento[]) => {
           this.orientamenti = orientamenti;

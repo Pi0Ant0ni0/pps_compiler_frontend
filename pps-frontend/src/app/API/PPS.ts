@@ -5,4 +5,5 @@ export interface PPS {
     attivitaDidatticheAScelta :AttivitaDidattica[];
     orientamento: InsegnamentoRegola[];
     coorte: number;
+    curriculum: string;
 }

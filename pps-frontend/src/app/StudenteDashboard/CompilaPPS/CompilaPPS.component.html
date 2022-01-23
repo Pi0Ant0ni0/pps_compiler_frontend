@@ -16,6 +16,15 @@
         <mat-label>Coorte</mat-label>
         <input matInput type="number" formControlName=coorteCtrl required>
       </mat-form-field>
+
+      <mat-form-field appearance="outline" style="width: 100%;" *ngIf="curricula.length!=0">
+        <mat-label>Curriculum</mat-label>
+        <mat-select formControlName=curriculumCtrl required>
+          <mat-option *ngFor="let curriculum of curricula" [value]="curriculum">
+            {{curriculum}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
       <div>
         <button mat-flat-button color="primary" [disabled]="!preliminariForm.valid" matStepperNext>Avanti</button>
       </div>
@@ -39,13 +48,12 @@
   <!--Terzo step insegnamenti a scelta -->
   <mat-step>
     <ng-template matStepLabel>Insegnamenti A Scelta</ng-template>
-    <app-InsegnamentiASceltaPPS [coorte]="coorte" [codiceCorsoDiStudio]="codiceCorsoDiStudio"
+    <app-InsegnamentiASceltaPPS [coorte]="coorte" [codiceCorsoDiStudio]="codiceCorsoDiStudio" [curriculum]="curriculum"
       (newInsegnamento)="addInsegnamento($event)" (removeInsegnamento)="removeInsegnamento()">
     </app-InsegnamentiASceltaPPS>
     <div>
       <button mat-flat-button color="primary" style="margin-left: 2%;" matStepperPrevious>Indietro</button>
-      <button mat-flat-button color="primary" style="margin-left: 2%;" [disabled]="!valid"
-        matStepperNext>Avanti</button>
+      <button mat-flat-button color="primary" style="margin-left: 2%;" matStepperNext>Avanti</button>
     </div>
   </mat-step>
 

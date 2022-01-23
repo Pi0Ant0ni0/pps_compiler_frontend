@@ -1,4 +1,5 @@
 <div class="centra">
+  <h1>PPS compilato da: {{pps.email}} <p *ngIf="pps.curriculum && pps.curriculum.length!=0"> Curriculum: {{pps.curriculum}}</p></h1>
   <h2 *ngIf="pps.liberi.length >0" style="margin-top: 1%;">Insegnamenti A Scelta </h2>
   <!--Tabella di preview-->
   <table mat-table multiTemplateDataRows #tabellaAScelta [dataSource]="pps.liberi"

@@ -8,4 +8,5 @@ export interface PPSPreview {
     cognome:string,
     orientamento: AttivitaDidatticaDettagliata[],
     liberi: AttivitaDidatticaDettagliata[],
+    curriculum: string,
 }

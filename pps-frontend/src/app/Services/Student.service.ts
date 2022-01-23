@@ -1,10 +1,10 @@
+import { CorsoDiStudio } from './../API/CorsoDiStudio';
 import { PPS } from './../API/PPS';
 import { Orientamento } from 'src/app/API/Orientamento';
-import { catchError } from 'rxjs/operators';
 import { AttivitaDidattica } from 'src/app/API/AttivitaDidattica';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, throwError } from 'rxjs';
+import { Observable, throwError, catchError } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -14,8 +14,13 @@ export class StudentService {
   private _orientamentiUrl = "/rest/manifestideglistudi/";
   private _ppsUrl="/rest/pps";
 
-  getInsegnamentiAScelta(coorte :number, corsoDiStudio:string) : Observable<any>{
-    return this._http.get<AttivitaDidattica[]>(this._insegnamentiUrl+corsoDiStudio+"/"+coorte+"/aScelta")
+  getInsegnamentiAScelta(coorte :number, corsoDiStudio:string, curriculum:string) : Observable<any>{
+    return this._http.get<AttivitaDidattica[]>(this._insegnamentiUrl+corsoDiStudio+"/"+coorte+"/aScelta?curriculum="+curriculum)
+    .pipe(catchError(this._handleError));
+  }
+
+  getCurricula(codiceCorsoDiStudio:string, coorte:number) : Observable<string[]>{
+    return this._http.get<string[]>(this._orientamentiUrl+codiceCorsoDiStudio+"/"+coorte+"/curricula")
     .pipe(catchError(this._handleError));
   }
 

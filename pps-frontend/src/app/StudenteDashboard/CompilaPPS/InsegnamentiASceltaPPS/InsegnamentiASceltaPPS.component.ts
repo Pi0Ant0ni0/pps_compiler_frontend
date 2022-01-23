@@ -23,6 +23,7 @@ export class InsegnamentiASceltaPPSComponent implements OnInit, OnChanges {
   @Output() removeInsegnamento: EventEmitter<any> =   new EventEmitter();
   @Input() codiceCorsoDiStudio!: string|undefined;
   @Input() coorte!:number|undefined;
+  @Input() curriculum:string|undefined;
   @ViewChild(FormGroupDirective) form! :FormGroupDirective;
 
 
@@ -87,8 +88,8 @@ export class InsegnamentiASceltaPPSComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes:SimpleChanges){
-    if(this.codiceCorsoDiStudio && this.coorte){
-      this._studentService.getInsegnamentiAScelta(this.coorte,this.codiceCorsoDiStudio).subscribe({
+    if(this.codiceCorsoDiStudio && this.coorte && this.curriculum){
+      this._studentService.getInsegnamentiAScelta(this.coorte,this.codiceCorsoDiStudio, this.curriculum).subscribe({
         next: (insegnamenti: AttivitaDidattica[]) => {
          this.insegnamentiAutoComplete= insegnamenti;
         },
