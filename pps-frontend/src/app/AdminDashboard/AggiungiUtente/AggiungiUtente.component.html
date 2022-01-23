@@ -34,6 +34,8 @@
               </mat-option>
             </mat-select>
           </mat-form-field>
+          <p *ngFor="let corso of corsi">{{corso.codice}}</p>
+          <button mat-raised-button color="primary" (click)="addCorso()" style="margin-bottom: 2%;">Aggiungi Corso Di Studio</button>
         </div>
         <button mat-raised-button color="primary" (click)="addUtente()" [disabled]="!utenteForm.valid">Aggiungi</button>
       </form>

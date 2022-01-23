@@ -13,7 +13,7 @@ import { DocenteService } from 'src/app/Services/Docente.service';
 export class PPSVisionatiComponent implements OnInit {
 
   ppsInSospeso :PPSPreview[] = [];
-  displayedColumns: string[] = ['Nome', 'Cognome', 'Email', 'Data Di Compilazione'];
+  displayedColumns: string[] = ['Nome', 'Cognome', 'Email', 'Data Di Compilazione', 'Codice Corso Di Studio'];
   dataSource =new MatTableDataSource(this.ppsInSospeso);
   ppsDetailed : boolean = false;
 

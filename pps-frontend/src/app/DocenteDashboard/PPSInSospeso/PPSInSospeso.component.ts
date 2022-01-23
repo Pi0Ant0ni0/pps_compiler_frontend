@@ -12,7 +12,7 @@ import { Router } from '@angular/router';
 })
 export class PPSInSospesoComponent implements OnInit {
   ppsInSospeso :PPSPreview[] = [];
-  displayedColumns: string[] = ['Nome', 'Cognome', 'Email', 'Data Di Compilazione'];
+  displayedColumns: string[] = ['Nome', 'Cognome', 'Email', 'Data Di Compilazione','Codice Corso Di Studio'];
   dataSource =new MatTableDataSource(this.ppsInSospeso);
   ppsDetailed : boolean = false;
 

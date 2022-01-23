@@ -1,8 +1,8 @@
+import { CorsoDiStudio } from './../../API/CorsoDiStudio';
 import { AdminService } from './../../Services/Admin.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { SadService } from './../../Services/sad.service';
 import { FormGroup, FormBuilder, Validators, FormGroupDirective } from '@angular/forms';
-import { CorsoDiStudio } from 'src/app/API/CorsoDiStudio';
 import { Roles } from './../../API/Roles.enum';
 import { Component, OnInit, ViewChild } from '@angular/core';
 
@@ -18,6 +18,7 @@ export class AggiungiUtenteComponent implements OnInit {
   utenteFormGroup: FormGroup;
   isDocente: boolean=false;
   @ViewChild("utenteForm") form!:FormGroupDirective;
+  corsi: CorsoDiStudio[]=[];
 
   addUtente(){
     if(this.utenteFormGroup.get("ruoloCtrl")?.value==Roles.SAD){
@@ -36,7 +37,7 @@ export class AggiungiUtenteComponent implements OnInit {
       });
     }else{
       if(this.utenteFormGroup.get("ruoloCtrl")?.value==Roles.DOCENTE){
-        if(!this.utenteFormGroup.get("corsoDiStudioCtrl")?.value){
+        if(this.corsi.length==0){
           this.utenteFormGroup.get("corsoDiStudioCtrl")!.setErrors([Validators.required])
           return;
         }
@@ -44,7 +45,7 @@ export class AggiungiUtenteComponent implements OnInit {
           nome: this.utenteFormGroup.get("nomeCtrl")?.value,
           cognome: this.utenteFormGroup.get("cognomeCtrl")?.value,
           email: this.utenteFormGroup.get("emailCtrl")?.value,
-          corsoDiStudio: this.utenteFormGroup.get("corsoDiStudioCtrl")?.value
+          corsoDiStudio: this.corsi
         }
         this._adminService.addDocenteDto(utente).subscribe({
           next: (message: string)=>{
@@ -60,6 +61,11 @@ export class AggiungiUtenteComponent implements OnInit {
 
   private _openSnackBar(message: string){
     this._snack.open(message, "close");
+  }
+
+  addCorso(){
+    this.corsi.push(this.utenteFormGroup.get("corsoDiStudioCtrl")?.value);
+    this.utenteFormGroup.get("corsoDiStudioCtrl")?.reset(undefined);
   }
 
 

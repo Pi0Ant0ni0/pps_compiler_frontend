@@ -1,5 +1,6 @@
 import { AttivitaDidatticaDettagliata } from './AttivitaDidatticaDettagliata';
 export interface PPSPreview {
+    codiceCorsoDiStudio: string,
     email:string,
     dataCompilazione: Date,
     approvato: boolean,
