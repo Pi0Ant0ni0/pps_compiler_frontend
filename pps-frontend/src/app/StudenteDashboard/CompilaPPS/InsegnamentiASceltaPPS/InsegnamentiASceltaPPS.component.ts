@@ -88,7 +88,9 @@ export class InsegnamentiASceltaPPSComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes:SimpleChanges){
-    if(this.codiceCorsoDiStudio && this.coorte && this.curriculum){
+    if(this.codiceCorsoDiStudio && this.coorte){
+      if(!this.curriculum)
+        this.curriculum="";
       this._studentService.getInsegnamentiAScelta(this.coorte,this.codiceCorsoDiStudio, this.curriculum).subscribe({
         next: (insegnamenti: AttivitaDidattica[]) => {
          this.insegnamentiAutoComplete= insegnamenti;
