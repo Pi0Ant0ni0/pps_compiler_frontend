@@ -16,14 +16,14 @@ import { HttpResponse } from '@angular/common/http';
 })
 export class LoginComponent implements OnInit {
 
-  public invalidLogin:boolean;
+
   public registrationSent: boolean;
   public email:string ="";
   public emailVerified:boolean = false;
   public otp: string="";
-  public error: string="";
-  public invalidRegistration:boolean;
   public loginSent : boolean;
+  public invalidLogin:boolean =false;
+  public invalidRegistration: boolean = false;
 
   public student :Student;
 
@@ -36,7 +36,7 @@ export class LoginComponent implements OnInit {
           this.emailVerified=true;
         },
         error: (err)=>{
-          this.error=err;
+          this.openSnackBar(err);
           this.invalidRegistration=true;
           this.registrationSent=false;
         }
@@ -55,9 +55,9 @@ export class LoginComponent implements OnInit {
           this.emailVerified=true;
       },
       error : (err) =>{
-          this.error=err;
-          this.invalidLogin=true;
-          this.loginSent = false;
+        this.invalidLogin=true;
+        this.openSnackBar(err);
+        this.loginSent=false;
       }});
       this.loginSent=true;
   }
@@ -93,8 +93,7 @@ export class LoginComponent implements OnInit {
         
     },
       error: (err)=>{
-        this.error=err;
-        this.invalidLogin=true;
+        this.openSnackBar(err);
     }
     });
   }

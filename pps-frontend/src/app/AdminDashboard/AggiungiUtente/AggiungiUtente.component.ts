@@ -37,6 +37,7 @@ export class AggiungiUtenteComponent implements OnInit {
       });
     }else{
       if(this.utenteFormGroup.get("ruoloCtrl")?.value==Roles.DOCENTE){
+        this.corsi=this.utenteFormGroup.get("corsoDiStudioCtrl")?.value;
         if(this.corsi.length==0){
           this.utenteFormGroup.get("corsoDiStudioCtrl")!.setErrors([Validators.required])
           return;
@@ -45,7 +46,7 @@ export class AggiungiUtenteComponent implements OnInit {
           nome: this.utenteFormGroup.get("nomeCtrl")?.value,
           cognome: this.utenteFormGroup.get("cognomeCtrl")?.value,
           email: this.utenteFormGroup.get("emailCtrl")?.value,
-          corsoDiStudio: this.corsi
+          corsoDiStudio:this.corsi
         }
         this._adminService.addDocenteDto(utente).subscribe({
           next: (message: string)=>{
@@ -61,11 +62,6 @@ export class AggiungiUtenteComponent implements OnInit {
 
   private _openSnackBar(message: string){
     this._snack.open(message, "close");
-  }
-
-  addCorso(){
-    this.corsi.push(this.utenteFormGroup.get("corsoDiStudioCtrl")?.value);
-    this.utenteFormGroup.get("corsoDiStudioCtrl")?.reset(undefined);
   }
 
 

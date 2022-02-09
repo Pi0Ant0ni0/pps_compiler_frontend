@@ -28,14 +28,12 @@
         <div #docente *ngIf="isDocente">
           <mat-form-field appearance="outline" style="width: 100%;">
             <mat-label>Corso Di Studio</mat-label>
-            <mat-select formControlName=corsoDiStudioCtrl >
+            <mat-select multiple formControlName=corsoDiStudioCtrl >
               <mat-option *ngFor="let corso of corsiDiStudio" [value]="corso">
                 {{corso.denominazione}} - {{corso.codice}}
               </mat-option>
             </mat-select>
           </mat-form-field>
-          <p *ngFor="let corso of corsi">{{corso.codice}}</p>
-          <button mat-raised-button color="primary" (click)="addCorso()" style="margin-bottom: 2%;">Aggiungi Corso Di Studio</button>
         </div>
         <button mat-raised-button color="primary" (click)="addUtente()" [disabled]="!utenteForm.valid">Aggiungi</button>
       </form>
