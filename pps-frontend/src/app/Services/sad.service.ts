@@ -62,6 +62,11 @@ export class SadService {
     .pipe(catchError(this.handleError));
   }
 
+  getAttivitaDidattiche() : Observable<AttivitaDidattica[]>{
+    return this.http.get<AttivitaDidattica[]>(this.insegnamentiUrl)
+    .pipe(catchError(this.handleError));
+  }
+
   
 
   addRegola(regola:ManifestoDegliStudi): Observable<string>{

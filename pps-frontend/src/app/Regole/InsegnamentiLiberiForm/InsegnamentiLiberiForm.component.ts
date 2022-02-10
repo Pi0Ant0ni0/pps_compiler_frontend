@@ -91,7 +91,7 @@ export class InsegnamentiLiberiFormComponent implements OnInit {
   ngOnChanges(changes:SimpleChanges){
     if(changes["dipartimento"]){
       console.log("inizializzo");
-      this.sadService.getInsegnamentByDipartimento(this.dipartimento).subscribe({
+      this.sadService.getAttivitaDidattiche().subscribe({
         next: (attivitita : AttivitaDidattica[])=>{
             this.insegnamentiAutoComplete = attivitita;
         }
