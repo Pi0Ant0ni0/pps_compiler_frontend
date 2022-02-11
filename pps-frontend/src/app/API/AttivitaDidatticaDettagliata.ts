@@ -3,9 +3,7 @@ export interface AttivitaDidatticaDettagliata {
     denominazioneAttivitaDidattica:string
     cfu:number
     codiceCorsoDiStudio:string
-    nonErogabile: boolean
     settoreScientificoDisciplinare:string
-    programmato: boolean
     contenuti:string
     metodiDidattici:string
     modalitaVerificaApprendimento:string
